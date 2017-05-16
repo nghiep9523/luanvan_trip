@@ -26,20 +26,18 @@ function Trip() {
 			request.execute('uspCreateTrip', (err, recordsets, returnValue, affected) => {
 				if(!err) {
 					console.log(server.amqpURL);
-					amqp.connect(server.amqpURL , function(err, conn) {
-						conn.createChannel(function(err, ch) {
-							var ex = 'trip_logs';
-							var id = payload.driverID;
-							var msg = recordsets[0];
+					// amqp.connect(server.amqpURL , function(err, conn) {
+					// 	conn.createChannel(function(err, ch) {
+					// 		var ex = 'trip_logs';
+					// 		var id = payload.driverID;
+					// 		var msg = recordsets[0];
 
-							console.log(msg);
-
-							ch.assertExchange(ex, 'direct', {durable: false});
-							ch.publish(ex, id, new Buffer(JSON.stringify(msg)));
-						});
-						setTimeout(function() { conn.close(); }, 500);
-					});
-			    	res.sendStatus(200);
+					// 		ch.assertExchange(ex, 'direct', {durable: false});
+					// 		ch.publish(ex, id, new Buffer(JSON.stringify(msg)));
+					// 	});
+					// 	setTimeout(function() { conn.close(); }, 500);
+					// });
+			    	res.status.send({status: 200, payload: recordsets[0]});
 			    } else {
 			    	if (err.number == 2627) {
 			    		res.status(400).send({status: 400, message: "Trip already exist"});
