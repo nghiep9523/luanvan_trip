@@ -37,7 +37,7 @@ function Trip() {
 					// 	});
 					// 	setTimeout(function() { conn.close(); }, 500);
 					// });
-			    	res.status(200).send({status: 200, payload: recordsets[0]});
+			    	res.status(200).send({status: 200, payload: recordsets[0][0]});
 			    } else {
 			    	if (err.number == 2627) {
 			    		res.status(400).send({status: 400, message: "Trip already exist"});
