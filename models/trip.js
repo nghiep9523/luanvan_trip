@@ -25,18 +25,6 @@ function Trip() {
 
 			request.execute('uspCreateTrip', (err, recordsets, returnValue, affected) => {
 				if(!err) {
-					console.log(server.amqpURL);
-					// amqp.connect(server.amqpURL , function(err, conn) {
-					// 	conn.createChannel(function(err, ch) {
-					// 		var ex = 'trip_logs';
-					// 		var id = payload.driverID;
-					// 		var msg = recordsets[0];
-
-					// 		ch.assertExchange(ex, 'direct', {durable: false});
-					// 		ch.publish(ex, id, new Buffer(JSON.stringify(msg)));
-					// 	});
-					// 	setTimeout(function() { conn.close(); }, 500);
-					// });
 			    	res.status(200).send({status: 200, payload: recordsets[0][0]});
 			    } else {
 			    	if (err.number == 2627) {
