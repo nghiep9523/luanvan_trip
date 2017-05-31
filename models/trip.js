@@ -41,15 +41,30 @@ function Trip() {
 		sql.connect(server.config, function (err) {
 			const request = new sql.Request();
 
-			request.input('driverID', sql.NVarChar, payload.driverID);
+			if (payload.driverID) {
+				request.input('driverID', sql.NVarChar, payload.driverID);
 
-			request.execute('uspGetTripInfo', (err, recordsets, returnValue, affected) => {
-				if(!err) {
-			    	res.status(200).send({status: 200, payload: recordsets[0]});
-			    } else {
-			    	res.status(400).send({status: 400, message: "Something happened, please try again"});
-			    }
-			});
+				request.execute('uspgetTripInfo', (err, recordsets, returnValue, affected) => {
+					if(!err) {
+				    	res.status(200).send({status: 200, payload: recordsets[0]});
+				    } else {
+				    	res.status(400).send({status: 400, message: "Something happened, please try again"});
+				    }
+				});
+			} else if (payload.userID) {
+				request.input('userID', sql.NVarChar, payload.userID);
+
+				request.execute('uspgetTripInfoUser', (err, recordsets, returnValue, affected) => {
+					if(!err) {
+				    	res.status(200).send({status: 200, payload: recordsets[0]});
+				    } else {
+				    	res.status(400).send({status: 400, message: "Something happened, please try again"});
+				    }
+				});
+			} else {
+				res.status(400).send({status: 400});
+			}
+			
 		});
 	}
 }
