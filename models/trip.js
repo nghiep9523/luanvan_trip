@@ -22,6 +22,7 @@ function Trip() {
 			request.input('toLong', sql.Decimal(9, 6), toLong);
 			request.input('toLat', sql.Decimal(9, 6), toLat);
 			request.input('createdDate', sql.DateTime, currentDate);
+			request.input('price', sql.Int, payload.price);
 
 			request.execute('uspCreateTrip', (err, recordsets, returnValue, affected) => {
 				if(!err) {
