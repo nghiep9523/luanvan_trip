@@ -31,7 +31,7 @@ function Trip() {
 			    	if (err.number == 2627) {
 			    		res.status(400).send({status: 400, message: "Trip already exist"});
 			    	} else {
-			    		res.status(400).send({status: 400, message: "Something happened, please try again"});
+			    		res.status(400).send({status: 400, message: err});
 			    	}
 			    }
 			});
