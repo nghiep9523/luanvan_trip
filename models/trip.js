@@ -47,9 +47,14 @@ function Trip() {
 
 				request.execute('uspgetTripInfo', (err, recordsets, returnValue, affected) => {
 					if(!err) {
-				    	res.status(200).send({status: 200, payload: recordsets[0]});
+						if (recordsets[0].length != 0) {
+				    		res.status(200).send({status: 200, payload: recordsets[0]});
+						} else {
+							res.status(400).send({status: 400, message: "There is no trip with this driver"});
+						}
+
 				    } else {
-				    	res.status(400).send({status: 400, message: "Something happened, please try again"});
+				    	res.status(400).send({status: 400, message: err});
 				    }
 				});
 			} else if (payload.userID) {
@@ -57,7 +62,12 @@ function Trip() {
 
 				request.execute('uspgetTripInfoUser', (err, recordsets, returnValue, affected) => {
 					if(!err) {
-				    	res.status(200).send({status: 200, payload: recordsets[0]});
+						if (recordsets[0].length != 0) {
+							res.status(200).send({status: 200, payload: recordsets[0]});
+						} else {
+							res.status(400).send({status: 400, message: "There is no trip with this user"});
+						}
+				    	
 				    } else {
 				    	res.status(400).send({status: 400, message: "Something happened, please try again"});
 				    }
